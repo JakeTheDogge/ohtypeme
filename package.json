@@ -1,0 +1,19 @@
+{
+  "name": "ohtypeme",
+  "version": "1.0.0",
+  "description": "Typing app",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/dude_ksusha/ohtypeme.git"
+  },
+  "author": "dude_ksusha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/dude_ksusha/ohtypeme/issues"
+  },
+  "homepage": "https://gitlab.com/dude_ksusha/ohtypeme#readme"
+}
