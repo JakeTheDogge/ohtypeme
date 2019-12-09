@@ -1,0 +1,40 @@
+.profile {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: center;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10vw;
+}
+
+.profile__data {
+  display: flex;
+  flex-direction: column;
+  font-family: TypingMachine;
+  font-size: 3vw;
+  padding: 2vh;
+  margin-right: 5vw;
+  border: 6px dotted black;
+  border-radius: 9px;
+}
+
+.profile__data_name {
+  font-size: 5vw;
+}
+
+th {
+  border-bottom: 3px dotted black;
+}
+
+th, td {
+  text-align: center;
+}
+
+.profile__speedPlot {
+  font-family: TypingMachine;
+  font-size: 3vw;
+  padding: 2vh;
+  border: 6px dotted black;
+  border-radius: 9px;
+}

@@ -1,0 +1,131 @@
+@font-face {
+  font-family: TypingMachine;
+  src: url(./font/brotherDeluxe1350____2011.ttf);
+}
+
+html, body {
+  min-height: 100vh
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+}
+
+textarea:hover, textarea:focus {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.menu {
+  position: sticky;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 3vh;
+  font-family: TypingMachine;
+  font-size: 3vh;
+  margin: 2vh;
+}
+
+.menuItem, .menuTitle {
+  margin: 0vw 0.3vw;
+}
+
+.selectedNav{
+  text-decoration-line: underline;
+}
+.practice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: auto;
+}
+
+.practice__text, .practice__input {
+  width: 80vw;
+  height: 20vh;
+}
+
+.practice__text_textarea, .practice__input_textarea {
+  width: 100%;
+  height: 100%;
+  font-family: TypingMachine;
+  font-size: 3vh;
+  border: none;
+}
+
+.practice__input_textarea {
+  opacity: 0.6;
+}
+
+.result {
+  margin-top: 2vh;
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box;
+}
+
+.result__name {
+  font-family: TypingMachine;
+  font-size: 3vh;
+}
+
+.result__score {
+  font-family: TypingMachine;
+  font-size: 6vh;
+}
+
+.result__units {
+  font-size: 2vh;
+}
+
+.leaderboard {
+  margin-left: 20vh;
+  font-family: TypingMachine;
+  font-size: 3vh;
+}
+
+.profile {
+  display: flex;
+  flex-flow: row wrap;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.profile__data {
+  display: flex;
+  flex-direction: column;
+  font-family: TypingMachine;
+  font-size: 3vw;
+  padding: 2vh;
+  margin-right: 5vw;
+  border: 6px dotted black;
+  border-radius: 9px;
+}
+
+.profile__data_name {
+  font-size: 5vw;
+}
+
+th {
+  border-bottom: 3px dotted black;
+}
+
+th, td {
+  text-align: center;
+}
+
+.profile__speedPlot {
+  font-family: TypingMachine;
+  font-size: 3vw;
+  padding: 2vh;
+  border: 6px dotted black;
+  border-radius: 9px;
+}

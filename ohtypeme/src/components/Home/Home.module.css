@@ -1,0 +1,23 @@
+.buttons {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: center;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10vw;
+}
+
+.button {
+  width: 15vw;
+  height: 15vh;
+  background: white;
+  font-family: TypingMachine;
+  font-size: 3vh;
+  border: 6px dotted black;
+  border-radius: 9px;
+  margin-left: 3vw;
+  padding-top: 7vh;
+  text-align: center;
+  vertical-align: auto;
+}
