@@ -1,11 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=IM+Fell+English+SC');
-:root {
-  font-size: 0.625em;
+@font-face {
+  font-family: TypingMachine;
+  src: url(./font/brotherDeluxe1350____2011.ttf);
 }
-
-/* 
-layout
-*/
 
 html, body {
   min-height: 100vh
@@ -20,6 +16,11 @@ textarea:hover, textarea:focus {
   outline: none;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 .menu {
   position: sticky;
   display: flex;
@@ -27,15 +28,18 @@ textarea:hover, textarea:focus {
   align-items: center;
   justify-content: space-between;
   height: 3vh;
-  font-family: 'IM Fell English', serif;
+  font-family: TypingMachine;
   font-size: 3vh;
   margin: 2vh;
 }
 
-.menu__item {
+.menuItem, .menuTitle {
   margin: 0vw 0.3vw;
 }
 
+.selectedNav{
+  text-decoration-line: underline;
+}
 .practice {
   display: flex;
   flex-direction: column;
@@ -52,7 +56,7 @@ textarea:hover, textarea:focus {
 .practice__text_textarea, .practice__input_textarea {
   width: 100%;
   height: 100%;
-  font-family: 'IM Fell English', serif;
+  font-family: TypingMachine;
   font-size: 3vh;
   border: none;
 }
@@ -69,12 +73,12 @@ textarea:hover, textarea:focus {
 }
 
 .result__name {
-  font-family: 'IM Fell English', serif;
+  font-family: TypingMachine;
   font-size: 3vh;
 }
 
 .result__score {
-  font-family: 'IM Fell English', serif;
+  font-family: TypingMachine;
   font-size: 6vh;
 }
 
@@ -84,7 +88,7 @@ textarea:hover, textarea:focus {
 
 .leaderboard {
   margin-left: 20vh;
-  font-family: 'IM Fell English', serif;
+  font-family: TypingMachine;
   font-size: 3vh;
 }
 
@@ -98,7 +102,7 @@ textarea:hover, textarea:focus {
 .profile__data {
   display: flex;
   flex-direction: column;
-  font-family: 'IM Fell English', serif;
+  font-family: TypingMachine;
   font-size: 3vw;
   padding: 2vh;
   margin-right: 5vw;
@@ -108,29 +112,20 @@ textarea:hover, textarea:focus {
 
 .profile__data_name {
   font-size: 5vw;
-  
 }
 
-th{
+th {
   border-bottom: 3px dotted black;
 }
-th, td{
+
+th, td {
   text-align: center;
 }
 
 .profile__speedPlot {
-  font-family: 'IM Fell English', serif;
+  font-family: TypingMachine;
   font-size: 3vw;
   padding: 2vh;
   border: 6px dotted black;
   border-radius: 9px;
 }
-
-/* /* 
-Counters 
-*/
-
-/* 
-.menu ol { 
-  counter-reset:menu;
-} */

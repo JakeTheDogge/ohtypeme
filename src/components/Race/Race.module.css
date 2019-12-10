@@ -1,0 +1,13 @@
+.raceItem {
+  width: 60vw;
+  height: 5vh;
+  border: none;
+  border-bottom: 6px dotted black;
+  border-radius: 9px;
+  margin: auto;
+}
+
+.broom {
+  height: 4.5vh;
+  width: 3vw;
+}
