@@ -19,7 +19,7 @@ const Practice = (props) => {
 
 
   async function fetchText() {
-    const response = await fetch(`/quotes/${randomId()}`)
+    const response = await fetch(`167.172.164.93:8800/quotes/${randomId()}`);
     response.json()
       .then(text => props.loadText(text))
 
