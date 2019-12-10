@@ -31,8 +31,12 @@
   border: none;
 }
 
-.practice__input_textarea, .inputedText {
+.practice__input_textarea, .rightText {
   opacity: 0.6;
+}
+
+.wrongText {
+  color: #c62606;
 }
 
 .repeatButton {
@@ -41,4 +45,25 @@
   background: url('../logos/harry-potter.svg') no-repeat;
   border: none;
   padding: 3vw;
+}
+
+.result {
+  margin-top: 2vh;
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box;
+}
+
+.result__name {
+  font-family: TypingMachine;
+  font-size: 3vh;
+}
+
+.result__score {
+  font-family: TypingMachine;
+  font-size: 6vh;
+}
+
+.result__units {
+  font-size: 2vh;
 }
