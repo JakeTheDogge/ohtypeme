@@ -6,6 +6,18 @@ import Race from './components/Race/Race';
 import { Profile } from './components/Profile/Profile';
 import Practice from './components/Practice/Practice.jsx';
 import uid from 'uid2';
+import { names } from './communications/names'
+
+const randomId = () => Math.floor(Math.random() * Math.floor(27));
+export const getDataFromLS = (key) => {
+  if (!localStorage.getItem(String(key))) {
+    const name = names[randomId()];
+    localStorage.setItem(String(key), name)
+    return name;
+  } else { 
+    return localStorage.getItem(String(key)) 
+  }
+}
 
 function App() {
   return (

@@ -5,7 +5,7 @@ import styles from './Practice.module.css';
 
 
 export const Result = (props) => {
-  const accuracy = Math.round(100*(1-props.mistakes/props.text.length));
+  const accuracy = Math.round(100*(1-Math.min(props.mistakes/props.text.length, 1)));
   return (
   <div class={styles['result']}>
     <table>

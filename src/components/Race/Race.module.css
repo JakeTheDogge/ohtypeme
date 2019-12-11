@@ -1,3 +1,9 @@
+.raceState{
+  margin-bottom: 2vh;
+}
+
+
+
 .raceItem {
   width: 60vw;
   height: 5vh;
@@ -7,7 +13,7 @@
   margin: auto;
 }
 
-.broom {
-  height: 4.5vh;
+.snitch {
+  height: 5vh;
   width: 3vw;
 }

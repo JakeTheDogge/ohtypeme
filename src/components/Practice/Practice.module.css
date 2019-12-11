@@ -39,10 +39,26 @@
   color: #c62606;
 }
 
+.buttons{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  margin-bottom: 2vh;
+
+}
+
 .repeatButton {
   width: 2vw;
   height: 2vh;
   background: url('../logos/harry-potter.svg') no-repeat;
+  border: none;
+  padding: 3vw;
+}
+
+.startGame {
+  width: 2vw;
+  height: 2vh;
+  background: url('../logos/broom.svg') no-repeat;
   border: none;
   padding: 3vw;
 }

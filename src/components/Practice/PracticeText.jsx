@@ -19,7 +19,7 @@ export const PracticeText = (props) => {
     return (
     <div className={styles['practice__text']}>
       <div className={styles['practice__text_textarea']}>
-        {right && <span className={styles.rightText}>{right}</span>}
+        {right && <span className= {styles.rightText}>{right}</span>}
         {wrong && <span className={styles.wrongText}>{wrong}</span>}
         {leftText && !wrong && <span>{leftText}</span>}
       </div>

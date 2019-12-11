@@ -9,7 +9,7 @@ export default class Round {
   }
 
   isBetterThan(other) {
-    return this.leaderId.getSuffix() < other.leaderId.getSuffix()
+    return this.ids.includes(other.leaderId.getId()) && this.leaderId.getSuffix() < other.leaderId.getSuffix()
   }
   static fromObj(obj) {
     return new Round(obj.text, ID.fromObj(obj.leaderId), obj.ids, obj.id)
