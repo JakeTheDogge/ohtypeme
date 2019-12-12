@@ -47,7 +47,7 @@ export default class DataProcessor {
         dto = this.processTextResponseBusy(state, action.payload);
         break;
       case DataProcessor.TEXT_PROGRESS:
-        dispatch('if right text, update percents');
+        dispatch('if right text, update percents', action.payload);
         break;
       case DataProcessor.HELLO:
         console.log('HELLO');

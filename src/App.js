@@ -6,18 +6,20 @@ import Race from './components/Race/Race';
 import { Profile } from './components/Profile/Profile';
 import Practice from './components/Practice/Practice.jsx';
 import uid from 'uid2';
-import { names } from './communications/names'
+import _ from 'lodash';
+import { names } from './names';
 
-const randomId = () => Math.floor(Math.random() * Math.floor(27));
-export const getDataFromLS = (key) => {
+export const getDataFromLS = (key, defaultValue) => {
   if (!localStorage.getItem(String(key))) {
-    const name = names[randomId()];
-    localStorage.setItem(String(key), name)
-    return name;
+    localStorage.setItem(String(key), defaultValue);
+    return defaultValue;
   } else { 
     return localStorage.getItem(String(key)) 
   }
-}
+};
+
+export const USER_NAME = getDataFromLS('userName', _.sample(names));
+export const RANDOM_SUFFIX = getDataFromLS('randomSuffix', uid(6, undefined));
 
 function App() {
   return (
@@ -28,15 +30,10 @@ function App() {
             <NavLink to='/' className={styles.menuTitle}  > Oh Type Me </NavLink>
           </div>
           <div>
-
             <NavLink to='/practice' className={styles.menuItem} activeClassName={styles.selectedNav} > Practice </NavLink>
-
-            <NavLink to={'/race/' + uid(6)} className={styles.menuItem} activeClassName={styles.selectedNav}> Race </NavLink>
-
+            <NavLink to={'/race/' + uid(6, undefined)} className={styles.menuItem} activeClassName={styles.selectedNav}> Race </NavLink>
             <NavLink to='/profile' className={styles.menuItem} activeClassName={styles.selectedNav}> Profile </NavLink>
-
           </div>
-
         </div>
 
         <Switch>
@@ -44,7 +41,6 @@ function App() {
           <Route path='/practice' component={Practice} />
           <Route path='/race/:raceId' component={Race} />
           <Route path='/profile' component={Profile} />
-
         </Switch>
       </Router>
 

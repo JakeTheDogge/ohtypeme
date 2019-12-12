@@ -2,6 +2,7 @@ import uid from 'uid2'
 import WebRTC from './WebRTC';
 import Round from './Round';
 import DataProcessor from './DataProcessor';
+import ID from './ID';
 
 export const dispatch = (args) => {
   console.log('DISPATCHING');
@@ -12,8 +13,8 @@ export default class Manager {
   static instance = null;
 
   static getInstance(roomId, userName, randomSuffix) {
-    if (Manager.instance === null) {
-      Manager.instance = new Manager(roomId, userName, randomSuffix);
+    if (Manager.instance === null || Manager.instance.webRTC.peerId.roomId !== roomId) {
+      Manager.instance = new Manager(new ID(roomId, userName, randomSuffix));
     }
     return Manager.instance;
   }
@@ -66,6 +67,11 @@ export default class Manager {
   finishRound() {
     this.round = null;
     this.readyForNewRound = true;
+  }
+
+  sendProgress(progress) {
+    this.webRTC.sendToPeers(this.round.ids,
+      {type: DataProcessor.TEXT_PROGRESS, payload: {id: this.webRTC.peerId.getId(), progress: progress}})
   }
 
   getState() {
