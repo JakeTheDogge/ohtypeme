@@ -6,7 +6,7 @@ import { PracticeText } from '../Practice/PracticeText';
 import { loadText, roundIsToStart, endTyping, startRound, endCountdown, START_ROUND } from '../../redux/actions';
 import common from 'common-prefix';
 import { Result } from '../Practice/Result';
-
+import RaceState from '../Race/RaceState';
 import Manager from '../../communications/Manager';
 import { USER_NAME } from '../../App';
 
@@ -32,6 +32,7 @@ const Race = (props) => {
   }
 
   const startGame = () => {
+    props.endTyping();
     fetchText();
     setInput('');
     textInput.current.focus();
@@ -56,18 +57,20 @@ const Race = (props) => {
 
   return (
     <>
-      {gameIsToStart && <div className={styles.gameIsToStart}> banner + countdown</div>}
+      {gameIsToStart && <div className={styles.gameIsToStart}> <div className={styles.popup}> Waiting for your friends </div></div>}
       {time && <Clock timestamp={time} />}
       <div className={styles.practice}>
         <div className={styles.practiceZone}>
+          {/* {ids && <RaceState participants={props.participants} procent={percent} />} */}
+
           <PracticeText value={text} input={input} />
           <div className={styles['practice__input']}>
             <textarea value={input} onChange={handleInputChange} ref={textInput} className={styles['practice__input_textarea']} autoFocus='on' spellCheck="false" autoCapitalize='off' autoCorrect='off' autoComplete='off'></textarea>
           </div>
         </div>
         <div className={styles.statsZone}>
-        <button title='Start a Race!' className={styles.startGame} onClick={startGame} />
-        <Result mistakes={mistakes} text={text} />
+          <button title='Start a Race!' className={styles.startGame} onClick={startGame} />
+          <Result mistakes={mistakes} text={text} />
         </div>
       </div>
     </>

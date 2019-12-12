@@ -5,7 +5,7 @@ const reducer = (state, action) => {
     case (ROUND_IS_TO_START):
       return Object.assign({}, state, { gameIsToStart: true });
     case (START_ROUND):
-      return Object.assign({}, state, { gameIsToStart: false, time: action.payload.time });
+      return Object.assign({}, state, { gameIsToStart: false, time: action.payload.time, text: action.payload.text, ids: action.payload.ids });
     case (LOAD_TEXT):
       return Object.assign({}, state, { text: action.payload.text });
     case (END_TYPING):

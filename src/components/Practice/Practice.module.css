@@ -10,7 +10,7 @@
   align-content: center;
 }
 
-.clock:target {
+.clock:target, .gameIsToStart:target {
   visibility: visible;
   opacity: 1;
 }

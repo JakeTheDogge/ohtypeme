@@ -7,6 +7,7 @@ import styles from './Practice.module.css';
 import { loadText, roundIsToStart, endTyping, startRound, endCountdown, START_ROUND } from '../../redux/actions';
 import common from 'common-prefix';
 import Clock from '../Clock.jsx';
+import { is } from '@babel/types';
 
 // import Manager from '../../communications/Manager';
 // import ID from '../../communications/ID';
@@ -17,6 +18,7 @@ const Practice = (props) => {
   const [mistakes, setMistakes] = useState(0);
   const [percent, setPercent] = useState(0);
   const textInput = React.createRef();
+  const [speed, setSpeed] = useState(0)
 
   const { text } = props;
   const { gameIsToStart } = props;
@@ -50,6 +52,9 @@ const Practice = (props) => {
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
+    if ((e.target.value.length > input.length) && (e.target.value[e.target.value.length - 1] === text[e.target.value.length - 1])) {
+      setSpeed(e.target.length * 12 / (Date.now() - time).getSeconds())
+    }
     if ((e.target.value.length > input.length) && (e.target.value[e.target.value.length - 1] !== text[e.target.value.length - 1])) {
       setMistakes(mistakes + 1)
     }
@@ -63,7 +68,6 @@ const Practice = (props) => {
       {time && <Clock timestamp={time} />}
       <div className={styles.practice}>
         <div className={styles.practiceZone}>
-          {props.participants && <RaceState participants={props.participants} procent={percent} />}
           <PracticeText value={text} input={input} />
           <div className={styles['practice__input']}>
             <textarea value={input} onChange={handleInputChange} ref={textInput} className={styles['practice__input_textarea']} autoFocus='on' spellCheck="false" autoCapitalize='off' autoCorrect='off' autoComplete='off'></textarea>
@@ -71,10 +75,7 @@ const Practice = (props) => {
 
         </div>
         <div className={styles.statsZone}>
-
-
-            <button className={styles.repeatButton} title='New Text' onClick={toggleClick} />
-
+          <button className={styles.repeatButton} title='New Text' onClick={toggleClick} />
           <Result mistakes={mistakes} text={text} />
         </div>
       </div >
