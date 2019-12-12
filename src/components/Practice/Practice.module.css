@@ -25,7 +25,8 @@
   margin: auto;
   margin-top: 30vh;
   background: #fff;
-  border-radius: 5px;
+  border: 6px dotted black;
+  border-radius: 9px;
   text-align: center;
   padding-top: 6vh;;
   transition: all 5s ease-in-out;

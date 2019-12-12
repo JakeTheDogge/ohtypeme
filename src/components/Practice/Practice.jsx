@@ -48,9 +48,12 @@ const Practice = (props) => {
 
   const startGame = () => {
     fetchText();
+    setInput('');
+    textInput.current.focus();
+    setProcent(0);
+    setMistakes(0);
     props.roundIsToStart();
     props.startRound({ text: text, time: Date.now() + 5000 });
-    textInput.current.focus();
   };
 
 
