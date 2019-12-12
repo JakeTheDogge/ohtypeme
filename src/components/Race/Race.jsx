@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { PracticeText } from '../Practice/PracticeText';
 import { loadText, roundIsToStart, endTyping, startRound, endCountdown, START_ROUND } from '../../redux/actions';
 import common from 'common-prefix';
+import { Result } from '../Practice/Result';
+
 import Manager from '../../communications/Manager';
 import { USER_NAME } from '../../App';
 
@@ -56,12 +58,18 @@ const Race = (props) => {
     <>
       {gameIsToStart && <div className={styles.gameIsToStart}> banner + countdown</div>}
       {time && <Clock timestamp={time} />}
-      <PracticeText value={text} input={input} />
-      <div className={styles['practice__input']}>
-        <textarea value={input} onChange={handleInputChange} ref={textInput} className={styles['practice__input_textarea']} autoFocus='on' spellCheck="false" autoCapitalize='off' autoCorrect='off' autoComplete='off'></textarea>
+      <div className={styles.practice}>
+        <div className={styles.practiceZone}>
+          <PracticeText value={text} input={input} />
+          <div className={styles['practice__input']}>
+            <textarea value={input} onChange={handleInputChange} ref={textInput} className={styles['practice__input_textarea']} autoFocus='on' spellCheck="false" autoCapitalize='off' autoCorrect='off' autoComplete='off'></textarea>
+          </div>
+        </div>
+        <div className={styles.statsZone}>
+        <button title='Start a Race!' className={styles.startGame} onClick={startGame} />
+        <Result mistakes={mistakes} text={text} />
+        </div>
       </div>
-      {props.participants && <button title='Start a Race!' className={styles.startGame} onClick={startGame} />}
-
     </>
   )
 };

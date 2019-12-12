@@ -71,10 +71,10 @@ const Practice = (props) => {
 
         </div>
         <div className={styles.statsZone}>
-          <div className={styles.buttons}>
+
 
             <button className={styles.repeatButton} title='New Text' onClick={toggleClick} />
-          </div>
+
           <Result mistakes={mistakes} text={text} />
         </div>
       </div >
