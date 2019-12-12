@@ -8,7 +8,7 @@ import common from 'common-prefix';
 import { Result } from '../Practice/Result';
 import RaceState from '../Race/RaceState';
 import Manager from '../../communications/Manager';
-import { USER_NAME } from '../../App';
+import { RANDOM_SUFFIX, USER_NAME } from '../../App';
 
 
 const Race = (props) => {
@@ -19,16 +19,18 @@ const Race = (props) => {
   const [mistakes, setMistakes] = useState(0);
   const [percent, setPercent] = useState(0);
   const textInput = React.createRef();
-  const { text } = props;
-  const { gameIsToStart } = props;
-  const { time } = props;
+  const { time, percents, text, gameIsToStart } = props;
   const randomId = () => Math.floor(Math.random() * Math.floor(2130) + 1);
+  const manager = Manager.getInstance(params.roomId, USER_NAME, RANDOM_SUFFIX);
 
 
   function fetchText() {
     fetch(`https://ohtypeme.ml/quotes/${randomId()}`)
       .then(response => response.json())
-      .then(text => props.loadText(text))
+      .then(text => {
+        props.loadText(text);
+        manager.prepareToStartNewRound(text);
+      })
   }
 
   const startGame = () => {
@@ -39,7 +41,6 @@ const Race = (props) => {
     setPercent(0);
     setMistakes(0);
     props.roundIsToStart();
-    props.startRound({ text: text, time: Date.now() + 5000 });
   };
 
   const handleInputChange = (e) => {
@@ -47,8 +48,13 @@ const Race = (props) => {
     if ((e.target.value.length > input.length) && (e.target.value[e.target.value.length - 1] !== text[e.target.value.length - 1])) {
       setMistakes(mistakes + 1)
     }
-    if (e.target.value.length === text.length && common([e.target.value, text]) === text) { props.endTyping() }
-    setPercent(e.target.value.length / text.length);
+    if (e.target.value.length === text.length && common([e.target.value, text]) === text) {
+      manager.finishRound();
+      props.endTyping();
+    }
+    const progress = e.target.value.length / text.length;
+    setPercent(progress);
+    manager.sendProgress(progress)
   };
 
   useEffect(() => {
@@ -57,6 +63,7 @@ const Race = (props) => {
 
   return (
     <>
+      {JSON.stringify(percents)};
       {gameIsToStart && <div className={styles.gameIsToStart}> <div className={styles.popup}> Waiting for your friends </div></div>}
       {time && <Clock timestamp={time} />}
       <div className={styles.practice}>
@@ -65,7 +72,7 @@ const Race = (props) => {
 
           <PracticeText value={text} input={input} />
           <div className={styles['practice__input']}>
-            <textarea value={input} onChange={handleInputChange} ref={textInput} className={styles['practice__input_textarea']} autoFocus='on' spellCheck="false" autoCapitalize='off' autoCorrect='off' autoComplete='off'></textarea>
+            <textarea value={input} onChange={handleInputChange} ref={textInput} className={styles['practice__input_textarea']} autoFocus='on' spellCheck="false" autoCapitalize='off' autoCorrect='off' autoComplete='off' />
           </div>
         </div>
         <div className={styles.statsZone}>
@@ -84,7 +91,7 @@ const mapDispatchToProps = dispatch => ({
   startRound: (payload) => dispatch(startRound(payload)),
   endCountdown: () => dispatch(endCountdown())
 });
-const mapStateToProps = state => ({ text: state.text, gameIsToStart: state.gameIsToStart, time: state.time });
+const mapStateToProps = state => ({ text: state.text, gameIsToStart: state.gameIsToStart, time: state.time, percents: state.percents });
 
 export default connect(
   mapStateToProps,

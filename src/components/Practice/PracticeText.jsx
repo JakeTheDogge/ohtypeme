@@ -14,7 +14,7 @@ export const PracticeText = (props) => {
   };
 
   const [right, wrong] = checkSpelling();
-  
+
   return (
     <div className={styles['practice__text']}>
       <div className={styles['practice__text_textarea']}>

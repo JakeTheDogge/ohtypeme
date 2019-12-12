@@ -19,7 +19,8 @@ export const getDataFromLS = (key, defaultValue) => {
 };
 
 export const USER_NAME = getDataFromLS('userName', _.sample(names));
-export const RANDOM_SUFFIX = getDataFromLS('randomSuffix', uid(6, undefined));
+// export const RANDOM_SUFFIX = getDataFromLS('randomSuffix', uid(6, undefined));
+export const RANDOM_SUFFIX = uid(6, undefined);
 
 function App() {
   return (
@@ -39,7 +40,7 @@ function App() {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/practice' component={Practice} />
-          <Route path='/race/:raceId' component={Race} />
+          <Route path='/race/:roomId' component={Race} />
           <Route path='/profile' component={Profile} />
         </Switch>
       </Router>

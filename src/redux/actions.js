@@ -4,7 +4,12 @@ export const LOAD_TEXT = 'LOAD_TEXT';
 export const END_TYPING = 'END_TYPING';
 export const START_TYPING = 'START_TYPING';
 export const END_COUNTDOWN = 'END_COUNTDOWN';
+export const GET_PERCENT = 'GET_PERCENT';
 
+
+export function getPercent(payload) {
+  return { type: GET_PERCENT, payload }
+}
 
 export function endCountdown() {
   return { type: END_COUNTDOWN }
@@ -20,12 +25,12 @@ export function endTyping() {
 
 export function startRound(payload) {
   return { type: START_ROUND, payload };
-};
+}
 
 export function roundIsToStart() {
   return { type: ROUND_IS_TO_START };
-};
+}
 
 export function loadText(payload) {
   return { type: LOAD_TEXT, payload };
-};
+}

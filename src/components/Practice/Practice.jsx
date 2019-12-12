@@ -76,7 +76,7 @@ const Practice = (props) => {
         </div>
         <div className={styles.statsZone}>
           <button className={styles.repeatButton} title='New Text' onClick={toggleClick} />
-          <Result mistakes={mistakes} text={text} />
+          <Result mistakes={mistakes} text={text} speed={speed}/>
         </div>
       </div >
     </>

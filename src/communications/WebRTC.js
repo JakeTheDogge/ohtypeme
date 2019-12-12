@@ -1,4 +1,3 @@
-import ID from './ID';
 import Peer from 'peerjs';
 import DataProcessor from './DataProcessor';
 

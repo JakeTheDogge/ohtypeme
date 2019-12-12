@@ -1,4 +1,13 @@
-import { START_ROUND, ROUND_IS_TO_START, LOAD_TEXT, END_TYPING, START_TYPING, END_COUNTDOWN } from "./actions"
+import {
+  START_ROUND,
+  ROUND_IS_TO_START,
+  LOAD_TEXT,
+  END_TYPING,
+  START_TYPING,
+  END_COUNTDOWN,
+  GET_PERCENT
+} from "./actions"
+import ID from '../communications/ID';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -13,10 +22,19 @@ const reducer = (state, action) => {
     case (START_TYPING):
       return Object.assign({}, state, { isRoundOn: true });
     case (END_COUNTDOWN):
-        return Object.assign({}, state, { time: null });
+      return Object.assign({}, state, { time: null });
+    case (GET_PERCENT):
+      const oldPercents = state.percents;
+      return Object.assign({},
+        state,
+        {
+          percents: [
+            ...oldPercents.filter(([id, _]) => id.getId() !== ID.fromObj(action.payload.id).getId()),
+            [action.payload.id, action.payload.percent]]
+        });
     default:
       return state;
   }
-}
+};
 
 export default reducer;

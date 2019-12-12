@@ -6,11 +6,6 @@ import ID from './ID';
 import { startRound } from '../redux/actions';
 import store from '../redux/store';
 
-export const dispatch = (args) => {
-  console.log('DISPATCHING');
-  console.log(args);
-};
-
 export default class Manager {
   static instance = null;
 
@@ -56,7 +51,7 @@ export default class Manager {
   }
 
   startRound() {
-    const time = new Date().getTime() + 10 * 1000;
+    const time = new Date().getTime() + 4 * 1000;
     this.round.ids = Array.from(new Set(this.round.ids));
     this.readyForNewRound = false;
     this.webRTC.sendToPeers(this.round.ids, { type: DataProcessor.TIME, payload: {time, round: this.round }});
@@ -65,7 +60,7 @@ export default class Manager {
     competitorIds.add(this.round.leaderId.getId());
     competitorIds.delete(this.webRTC.peerId.getId());
     console.log('START Round dispatching');
-    store.dispatch(startRound({text: this.round.text, time, ids: Array.from(competitorIds).map(x => ID.fromString(x))}));
+    store.dispatch(startRound({text: this.round.text.text, time, ids: Array.from(competitorIds).map(x => ID.fromString(x))}));
   }
 
   finishRound() {
@@ -74,6 +69,9 @@ export default class Manager {
   }
 
   sendProgress(progress) {
+    if (!this.round){
+      return;
+    }
     this.webRTC.sendToPeers(this.round.ids,
       {type: DataProcessor.TEXT_PROGRESS, payload: {id: this.webRTC.peerId.getId(), progress: progress}})
   }

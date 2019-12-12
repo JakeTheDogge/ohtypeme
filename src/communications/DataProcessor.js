@@ -1,6 +1,5 @@
 import Round from './Round';
-import { dispatch } from './Manager';
-import { roundIsToStart, startRound } from '../redux/actions';
+import { getPercent, roundIsToStart, startRound } from '../redux/actions';
 import ID from './ID';
 import store from '../redux/store';
 
@@ -50,7 +49,7 @@ export default class DataProcessor {
         dto = this.processTextResponseBusy(state, action.payload);
         break;
       case DataProcessor.TEXT_PROGRESS:
-        dispatch('if right text, update percents', action.payload);
+        store.dispatch(getPercent({percent: action.payload.progress, id: ID.fromString(action.payload.id)}));
         break;
       case DataProcessor.HELLO:
         console.log('HELLO');
@@ -109,7 +108,7 @@ export default class DataProcessor {
     competitorIds.add(newRound.leaderId.getId());
     competitorIds.delete(state.webRTC.peerId.getId());
 
-    store.dispatch(startRound({text: newRound.text, time: data.time, ids: Array.from(competitorIds).map(x => ID.fromString(x))}));
+    store.dispatch(startRound({text: newRound.text.text, time: data.time, ids: Array.from(competitorIds).map(x => ID.fromString(x))}));
     return new DataProcessorDTO({newRound: newRound, readyForNewRound: false})
   }
 
