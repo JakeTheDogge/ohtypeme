@@ -4,7 +4,7 @@ import { Result } from './Result';
 import { PracticeText } from './PracticeText';
 import RaceState from '../Race/RaceState';
 import styles from './Practice.module.css';
-import { loadText, roundIsToStart, endTyping, startRound, endCountdown } from '../../redux/actions';
+import { loadText, roundIsToStart, endTyping, startRound, endCountdown, START_ROUND } from '../../redux/actions';
 import common from 'common-prefix';
 import Clock from '../Clock.jsx';
 
@@ -15,7 +15,7 @@ import Clock from '../Clock.jsx';
 const Practice = (props) => {
   const [input, setInput] = useState('');
   const [mistakes, setMistakes] = useState(0);
-  const [procent, setProcent] = useState(0);
+  const [percent, setPercent] = useState(0);
   const textInput = React.createRef();
 
   const { text } = props;
@@ -24,11 +24,11 @@ const Practice = (props) => {
   const randomId = () => Math.floor(Math.random() * Math.floor(2130) + 1);
 
 
-  async function fetchText() {
-    const response = await fetch(`https://ohtypeme.ml/quotes/${randomId()}`);
-    response.json()
+  function fetchText() {
+    fetch(`https://ohtypeme.ml/quotes/${randomId()}`)
+      .then(response => response.json())
       .then(text => props.loadText(text))
-  };
+  }
 
   useEffect(() => {
     textInput.current.focus();
@@ -40,40 +40,30 @@ const Practice = (props) => {
     fetchText();
     setInput('');
     textInput.current.focus();
-    setProcent(0);
+    setPercent(0);
     setMistakes(0);
   };
 
-  useEffect(() => { fetchText() }, [])
+  useEffect(() => { fetchText() }, []);
 
-  const startGame = () => {
-    fetchText();
-    setInput('');
-    textInput.current.focus();
-    setProcent(0);
-    setMistakes(0);
-    props.roundIsToStart();
-    props.startRound({ text: text, time: Date.now() + 5000 });
-  };
 
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
     if ((e.target.value.length > input.length) && (e.target.value[e.target.value.length - 1] !== text[e.target.value.length - 1])) {
       setMistakes(mistakes + 1)
-    };
+    }
     if (e.target.value.length === text.length && common([e.target.value, text]) === text) { props.endTyping() }
-    setProcent(e.target.value.length / text.length);
+    setPercent(e.target.value.length / text.length);
   };
 
 
   return (
     <>
-      {gameIsToStart && <div className={styles.gameIsToStart}> banner + countdown</div>}
-      {time && <Clock timestamp={time}/>}
+      {time && <Clock timestamp={time} />}
       <div className={styles.practice}>
         <div className={styles.practiceZone}>
-          {props.participants && <RaceState participants={props.participants} procent={procent} />}
+          {props.participants && <RaceState participants={props.participants} procent={percent} />}
           <PracticeText value={text} input={input} />
           <div className={styles['practice__input']}>
             <textarea value={input} onChange={handleInputChange} ref={textInput} className={styles['practice__input_textarea']} autoFocus='on' spellCheck="false" autoCapitalize='off' autoCorrect='off' autoComplete='off'></textarea>
@@ -82,7 +72,7 @@ const Practice = (props) => {
         </div>
         <div className={styles.statsZone}>
           <div className={styles.buttons}>
-            {props.participants && <button title='Start a Race!' className={styles.startGame} onClick={startGame} />}
+
             <button className={styles.repeatButton} title='New Text' onClick={toggleClick} />
           </div>
           <Result mistakes={mistakes} text={text} />
@@ -90,7 +80,8 @@ const Practice = (props) => {
       </div >
     </>
   )
-}
+};
+
 const mapDispatchToProps = dispatch => ({
   endTyping: () => dispatch(endTyping()),
   loadText: text => dispatch(loadText(text)),

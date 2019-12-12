@@ -3,6 +3,8 @@ import WebRTC from './WebRTC';
 import Round from './Round';
 import DataProcessor from './DataProcessor';
 import ID from './ID';
+import { startRound } from '../redux/actions';
+import store from '../redux/store';
 
 export const dispatch = (args) => {
   console.log('DISPATCHING');
@@ -58,10 +60,12 @@ export default class Manager {
     this.round.ids = Array.from(new Set(this.round.ids));
     this.readyForNewRound = false;
     this.webRTC.sendToPeers(this.round.ids, { type: DataProcessor.TIME, payload: {time, round: this.round }});
-    // TODO start the timer and show the text
-    dispatch('START ROUND');
-    console.log(this.round, time);
-    console.log('START Round');
+
+    const competitorIds = new Set(this.round.ids);
+    competitorIds.add(this.round.leaderId.getId());
+    competitorIds.delete(this.webRTC.peerId.getId());
+    console.log('START Round dispatching');
+    store.dispatch(startRound({text: this.round.text, time, ids: Array.from(competitorIds).map(x => ID.fromString(x))}));
   }
 
   finishRound() {

@@ -1,5 +1,8 @@
 import Round from './Round';
 import { dispatch } from './Manager';
+import { roundIsToStart, startRound } from '../redux/actions';
+import ID from './ID';
+import store from '../redux/store';
 
 
 export class DataProcessorDTO {
@@ -70,8 +73,8 @@ export default class DataProcessor {
       }});
     }
     if (state.round === null || newRound.isBetterThan(state.round)) {
-      // TODO remove `start new round` button and show `round is about to start`
-      dispatch('ROUND IS ABout to staRT');
+      console.log('dispatching round is to start');
+      store.dispatch(roundIsToStart());
       return new DataProcessorDTO({newRound, send: {
           ids: [newRound.leaderId.getId()],
           message: {type: DataProcessor.TEXT_RESPONSE_OK, payload: {id: state.webRTC.peerId.getId()}}
@@ -96,12 +99,18 @@ export default class DataProcessor {
     });
   }
 
-  processTime(sate, data) {
+  processTime(state, data) {
     console.log(`Time data:`);
     console.log(data);
-    // TODO start the countdown
-    dispatch('START THE COUNTDOWN');
-    return new DataProcessorDTO({newRound: Round.fromObj(data.round), readyForNewRound: false})
+    console.log('dispatching START THE COUNTDOWN');
+    const newRound = Round.fromObj(data.round);
+
+    const competitorIds = new Set(newRound.ids);
+    competitorIds.add(newRound.leaderId.getId());
+    competitorIds.delete(state.webRTC.peerId.getId());
+
+    store.dispatch(startRound({text: newRound.text, time: data.time, ids: Array.from(competitorIds).map(x => ID.fromString(x))}));
+    return new DataProcessorDTO({newRound: newRound, readyForNewRound: false})
   }
 
 }
