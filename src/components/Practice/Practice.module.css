@@ -1,12 +1,44 @@
+.gameIsToStart, .clock {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.clock:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  position: relative;
+  font-family: TypingMachine;
+  font-size: 3vh;
+  color: black;
+  height: 10vh;
+  width: 20vw;
+  margin: auto;
+  margin-top: 30vh;
+  background: #fff;
+  border-radius: 5px;
+  text-align: center;
+  padding-top: 6vh;;
+  transition: all 5s ease-in-out;
+}
+
 .practiceZone {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-
 }
 
-.practice{
+.practice {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -15,8 +47,6 @@
   margin-left: auto;
   margin-top: 10vh;
 }
-
-
 
 .practice__text, .practice__input {
   width: 60vw;
@@ -32,19 +62,18 @@
 }
 
 .practice__input_textarea, .rightText {
-  opacity: 0.6;
+  color: grey;
 }
 
 .wrongText {
   color: #c62606;
 }
 
-.buttons{
+.buttons {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
   margin-bottom: 2vh;
-
 }
 
 .repeatButton {

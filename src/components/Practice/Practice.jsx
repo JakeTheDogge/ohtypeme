@@ -4,8 +4,9 @@ import { Result } from './Result';
 import { PracticeText } from './PracticeText';
 import RaceState from '../Race/RaceState';
 import styles from './Practice.module.css';
-import { loadText, roundIsToStart, endTyping } from '../../redux/actions';
+import { loadText, roundIsToStart, endTyping, startRound, endCountdown } from '../../redux/actions';
 import common from 'common-prefix';
+import Clock from '../Clock.jsx';
 
 // import Manager from '../../communications/Manager';
 // import ID from '../../communications/ID';
@@ -13,7 +14,6 @@ import common from 'common-prefix';
 
 const Practice = (props) => {
   const [input, setInput] = useState('');
-  // const [text, setText] = useState('Wait a moment, darling');
   const [mistakes, setMistakes] = useState(0);
   const [procent, setProcent] = useState(0);
   const textInput = React.createRef();
@@ -25,11 +25,11 @@ const Practice = (props) => {
 
 
   async function fetchText() {
-    const response = await fetch(`http://167.172.164.93:8800/quotes/${randomId()}`);
+    const response = await fetch(`https://ohtypeme.ml/quotes/${randomId()}`);
     response.json()
       .then(text => props.loadText(text))
-
   };
+
   useEffect(() => {
     textInput.current.focus();
   }, []);
@@ -49,6 +49,8 @@ const Practice = (props) => {
   const startGame = () => {
     fetchText();
     props.roundIsToStart();
+    props.startRound({ text: text, time: Date.now() + 5000 });
+    textInput.current.focus();
   };
 
 
@@ -61,37 +63,37 @@ const Practice = (props) => {
     setProcent(e.target.value.length / text.length);
   };
 
-  // const countdown = (time) => {
-  //   let timer = setInterval(() => {if (Date.now() === time) { clearInterval(timer) }})
-  // }
 
   return (
+    <>
+      {gameIsToStart && <div className={styles.gameIsToStart}> banner + countdown</div>}
+      {time && <Clock timestamp={time}/>}
+      <div className={styles.practice}>
+        <div className={styles.practiceZone}>
+          {props.participants && <RaceState participants={props.participants} procent={procent} />}
+          <PracticeText value={text} input={input} />
+          <div className={styles['practice__input']}>
+            <textarea value={input} onChange={handleInputChange} ref={textInput} className={styles['practice__input_textarea']} autoFocus='on' spellCheck="false" autoCapitalize='off' autoCorrect='off' autoComplete='off'></textarea>
+          </div>
 
-    <div className={styles.practice}>
-      {gameIsToStart && <div> banner + countdown</div>}
-      {time && <div>Тут время {}</div>}
-      <div className={styles.practiceZone}>
-        {props.participants && <RaceState participants={props.participants} procent={procent} />}
-        <PracticeText value={text} input={input} />
-        <div className={styles['practice__input']}>
-          <textarea value={input} onChange={handleInputChange} ref={textInput} className={styles['practice__input_textarea']} autoFocus='on' spellCheck="false" autoCapitalize='off' autoCorrect='off' autoComplete='off'></textarea>
         </div>
-
-      </div>
-      <div className={styles.statsZone}>
-        <div className={styles.buttons}>
-          {props.participants && <button title='Start a Race!' className={styles.startGame} onClick={startGame} />}
-          <button className={styles.repeatButton} title='New Text' onClick={toggleClick} />
+        <div className={styles.statsZone}>
+          <div className={styles.buttons}>
+            {props.participants && <button title='Start a Race!' className={styles.startGame} onClick={startGame} />}
+            <button className={styles.repeatButton} title='New Text' onClick={toggleClick} />
+          </div>
+          <Result mistakes={mistakes} text={text} />
         </div>
-        <Result mistakes={mistakes} text={text} />
-      </div>
-    </div >
+      </div >
+    </>
   )
 }
 const mapDispatchToProps = dispatch => ({
   endTyping: () => dispatch(endTyping()),
   loadText: text => dispatch(loadText(text)),
   roundIsToStart: () => dispatch(roundIsToStart()),
+  startRound: (payload) => dispatch(startRound(payload)),
+  endCountdown: () => dispatch(endCountdown())
 });
 const mapStateToProps = state => ({ text: state.text, gameIsToStart: state.gameIsToStart, time: state.time });
 

@@ -3,6 +3,12 @@ export const ROUND_IS_TO_START = 'ROUND_IS_TO_START';
 export const LOAD_TEXT = 'LOAD_TEXT';
 export const END_TYPING = 'END_TYPING';
 export const START_TYPING = 'START_TYPING';
+export const END_COUNTDOWN = 'END_COUNTDOWN'
+
+
+export function endCountdown() {
+  return { type: END_COUNTDOWN }
+}
 
 export function startTyping() {
   return { type: START_TYPING };
