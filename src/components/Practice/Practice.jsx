@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Result } from './Result';
 import { PracticeText } from './PracticeText';
-import RaceState from '../Race/RaceState';
 import styles from './Practice.module.css';
-import { loadText, roundIsToStart, endTyping, startRound, endCountdown, START_ROUND } from '../../redux/actions';
+import { loadText, roundIsToStart, endTyping, startRound, endCountdown } from '../../redux/actions';
 import common from 'common-prefix';
 import Clock from '../Clock.jsx';
 import RaceItem from '../Race/RaceItem';
@@ -54,7 +53,7 @@ const Practice = (props) => {
   const handleInputChange = (e) => {
     setInput(e.target.value);
  
-      setSpeed(Math.round((common([e.target.value, text]).length * 12 /  (new Date(Date.now() - time).getSeconds()) )));
+    setSpeed(Math.round((common([e.target.value, text]).length * 12 /  (new Date(Date.now() - time).getSeconds() + (new Date(Date.now() - time)).getMinutes()*60) )));
 
     if ((e.target.value.length > input.length) && (e.target.value[e.target.value.length - 1] !== text[e.target.value.length - 1])) {
       setMistakes(mistakes + 1)
@@ -71,7 +70,7 @@ const Practice = (props) => {
         <div className={styles.practiceZone}>
           <RaceItem percent={percent}/>
           <PracticeText value={text} input={input} />
-          <div className={styles['practice__input']}>
+        <div className={styles['practice__input']}>
             <textarea value={input} onChange={handleInputChange} ref={textInput} className={styles['practice__input_textarea']} autoFocus='on' spellCheck="false" autoCapitalize='off' autoCorrect='off' autoComplete='off'></textarea>
           </div>
 

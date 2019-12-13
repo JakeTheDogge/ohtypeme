@@ -1,7 +1,5 @@
 import React from 'react';
 import styles from './Practice/Practice.module.css';
-import store from '../redux/store';
-
 
 
 class Clock extends React.Component {

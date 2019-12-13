@@ -5,7 +5,7 @@ export default class WebRTC {
   constructor(id, dataProcessor) {
     this.peerId = id;
     console.log('my id is', this.peerId.getId());
-    const webRTCServerInfo = { host: '167.172.164.93', port: 9000, path: '/oh-my-type' };
+    const webRTCServerInfo = { host: 'https://ohtypeme.ml', path: '/oh-my-type' };
     this.peer = new Peer(this.peerId.getId(), webRTCServerInfo);
     this.connections = new Map();
     this.dataProcessor = dataProcessor;

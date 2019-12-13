@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Clock from '../Clock.jsx';
 import styles from '../Practice/Practice.module.css';
 import { connect } from 'react-redux';
@@ -9,7 +9,6 @@ import {
   endTyping,
   startRound,
   endCountdown,
-  START_ROUND,
   startTyping
 } from '../../redux/actions';
 import common from 'common-prefix';
@@ -52,13 +51,13 @@ const Race = (props) => {
     props.roundIsToStart();
   };
 
-  const endGame =() => {
+  const endGame = () => {
     props.endTyping();
     setInput('');
     setPercent(0);
     setMistakes(0);
     manager.finishRound();
-  })
+  }
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -84,7 +83,7 @@ const Race = (props) => {
       {time && <Clock timestamp={time} />}
       <div className={styles.practice}>
         <div className={styles.practiceZone}>
-          <RaceState participants={ids} percents={percents} myId={manager.webRTC.peerId} myPercent={percent}/>
+          <RaceState participants={ids} percents={percents} myId={manager.webRTC.peerId} myPercent={percent} />
 
           <PracticeText value={text} input={input} />
           {isRoundOn || <div className={styles['practice__input']}>
@@ -92,8 +91,8 @@ const Race = (props) => {
           </div>}
         </div>
         <div className={styles.statsZone}>
-          <button title='Start a Race!' className={styles.startGame} onClick={() => {startGame()}} />
-          <button title='Finish Race!' className={styles.startGame} onClick={() => {endGame()}} />
+          <button title='Start a Race!' className={styles.startGame} onClick={() => { startGame() }} />
+          <button title='Finish Race!' className={styles.startGame} onClick={() => { endGame() }} />
           <Result mistakes={mistakes} text={text} speed={speed} />
         </div>
       </div>
@@ -117,7 +116,6 @@ const mapStateToProps = state => ({
   ids: state.ids,
   isRoundOn: state.isRoundOn,
 });
-const mapStateToProps = state => ({ text: state.text, gameIsToStart: state.gameIsToStart, time: state.time, percents: state.percents, isRoundOn: state.isRoundOn });
 
 export default connect(
   mapStateToProps,
