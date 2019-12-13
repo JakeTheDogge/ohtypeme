@@ -52,13 +52,14 @@ export default class Manager {
 
   startRound() {
     const time = new Date().getTime() + 4 * 1000;
-    this.round.ids = Array.from(new Set(this.round.ids));
+    const ids = new Set(this.round.ids);
+    ids.add(this.webRTC.peerId.getId());
+    this.round.ids = Array.from(new Set(ids));
     this.readyForNewRound = false;
     this.webRTC.sendToPeers(this.round.ids, { type: DataProcessor.TIME, payload: {time, round: this.round }});
 
     const competitorIds = new Set(this.round.ids);
     competitorIds.add(this.round.leaderId.getId());
-    competitorIds.delete(this.webRTC.peerId.getId());
     console.log('START Round dispatching');
     store.dispatch(startRound({text: this.round.text.text, time, ids: Array.from(competitorIds).map(x => ID.fromString(x))}));
   }

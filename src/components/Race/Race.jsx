@@ -3,7 +3,15 @@ import Clock from '../Clock.jsx';
 import styles from '../Practice/Practice.module.css';
 import { connect } from 'react-redux';
 import { PracticeText } from '../Practice/PracticeText';
-import { loadText, roundIsToStart, endTyping, startRound, endCountdown, START_ROUND } from '../../redux/actions';
+import {
+  loadText,
+  roundIsToStart,
+  endTyping,
+  startRound,
+  endCountdown,
+  START_ROUND,
+  startTyping
+} from '../../redux/actions';
 import common from 'common-prefix';
 import { Result } from '../Practice/Result';
 import RaceState from '../Race/RaceState';
@@ -20,7 +28,7 @@ const Race = (props) => {
   const [percent, setPercent] = useState(0);
   const textInput = React.createRef();
   const [speed, setSpeed] = useState(0)
-  const { time, percents, text, gameIsToStart, isRoundOn } = props;
+  const { time, percents, text, gameIsToStart, ids, isRoundOn } = props;
   const randomId = () => Math.floor(Math.random() * Math.floor(2130) + 1);
   const manager = Manager.getInstance(params.roomId, USER_NAME, RANDOM_SUFFIX);
 
@@ -44,6 +52,14 @@ const Race = (props) => {
     props.roundIsToStart();
   };
 
+  const endGame =() => {
+    props.endTyping();
+    setInput('');
+    setPercent(0);
+    setMistakes(0);
+    manager.finishRound();
+  })
+
   const handleInputChange = (e) => {
     setInput(e.target.value);
 
@@ -57,21 +73,18 @@ const Race = (props) => {
     }
     const progress = e.target.value.length / text.length;
     setPercent(progress);
+    console.log('sending progress');
+    console.log(progress, manager);
     manager.sendProgress(progress)
   };
 
-  useEffect(() => {
-    textInput.current.focus();
-  }, []);
-
   return (
     <>
-      {JSON.stringify(percents)};
       {gameIsToStart && <div className={styles.gameIsToStart}> <div className={styles.popup}> Waiting for your friends </div></div>}
       {time && <Clock timestamp={time} />}
       <div className={styles.practice}>
         <div className={styles.practiceZone}>
-          {/* {ids && <RaceState participants={props.participants} procent={percent} />} */}
+          <RaceState participants={ids} percents={percents} myId={manager.webRTC.peerId} myPercent={percent}/>
 
           <PracticeText value={text} input={input} />
           {isRoundOn || <div className={styles['practice__input']}>
@@ -79,7 +92,8 @@ const Race = (props) => {
           </div>}
         </div>
         <div className={styles.statsZone}>
-          <button title='Start a Race!' className={styles.startGame} onClick={startGame} />
+          <button title='Start a Race!' className={styles.startGame} onClick={() => {startGame()}} />
+          <button title='Finish Race!' className={styles.startGame} onClick={() => {endGame()}} />
           <Result mistakes={mistakes} text={text} speed={speed} />
         </div>
       </div>
@@ -92,7 +106,16 @@ const mapDispatchToProps = dispatch => ({
   loadText: text => dispatch(loadText(text)),
   roundIsToStart: () => dispatch(roundIsToStart()),
   startRound: (payload) => dispatch(startRound(payload)),
-  endCountdown: () => dispatch(endCountdown())
+  endCountdown: () => dispatch(endCountdown()),
+  startTyping: () => dispatch(startTyping()),
+});
+const mapStateToProps = state => ({
+  text: state.text,
+  gameIsToStart: state.gameIsToStart,
+  time: state.time,
+  percents: state.percents,
+  ids: state.ids,
+  isRoundOn: state.isRoundOn,
 });
 const mapStateToProps = state => ({ text: state.text, gameIsToStart: state.gameIsToStart, time: state.time, percents: state.percents, isRoundOn: state.isRoundOn });
 

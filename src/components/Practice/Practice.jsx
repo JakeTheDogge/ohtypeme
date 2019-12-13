@@ -7,7 +7,6 @@ import styles from './Practice.module.css';
 import { loadText, roundIsToStart, endTyping, startRound, endCountdown, START_ROUND } from '../../redux/actions';
 import common from 'common-prefix';
 import Clock from '../Clock.jsx';
-import { is } from '@babel/types';
 import RaceItem from '../Race/RaceItem';
 
 // import Manager from '../../communications/Manager';

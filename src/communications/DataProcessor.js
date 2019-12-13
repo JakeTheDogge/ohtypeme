@@ -106,7 +106,6 @@ export default class DataProcessor {
 
     const competitorIds = new Set(newRound.ids);
     competitorIds.add(newRound.leaderId.getId());
-    competitorIds.delete(state.webRTC.peerId.getId());
 
     store.dispatch(startRound({text: newRound.text.text, time: data.time, ids: Array.from(competitorIds).map(x => ID.fromString(x))}));
     return new DataProcessorDTO({newRound: newRound, readyForNewRound: false})
