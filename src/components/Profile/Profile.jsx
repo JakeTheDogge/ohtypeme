@@ -6,13 +6,10 @@ export const Profile = () => {
   return (
     <div className={styles.profile}>
       <div className={styles['profile__data']}>
-        <span className={styles['profile__data_name']}>{USER_NAME}</span>
-        <span> Accuracy: 95%</span>
-        <span>Speed: 20 wpm</span>
+        You are <span className={styles['profile__data_name']}>{USER_NAME}</span> and you are doing great.
+
       </div>
-      <div className={styles['profile__speedPlot']}>
-        Here will be Plot
-  </div>
+
     </div>
   )
 };

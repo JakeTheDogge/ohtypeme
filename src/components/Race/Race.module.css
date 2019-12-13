@@ -2,8 +2,6 @@
   margin-bottom: 2vh;
 }
 
-
-
 .raceItem {
   width: 60vw;
   height: 5vh;
@@ -12,11 +10,13 @@
   border-radius: 9px;
   margin: auto;
   font-family: TypingMachine;
-  font-size: 3vh;
+  font-size: 2vh;
+  color: lightgray;
 }
 
 .snitch {
-  position: ;
+  margin-left: 6vw;
+  position: absolute;
   height: 5vh;
   width: 3vw;
   z-index:10;

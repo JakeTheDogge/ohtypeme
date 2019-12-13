@@ -28,7 +28,8 @@
   border: 6px dotted black;
   border-radius: 9px;
   text-align: center;
-  padding-top: 6vh;;
+  padding-top: 6vh;
+  ;
   transition: all 5s ease-in-out;
 }
 
@@ -73,14 +74,23 @@
 .buttons {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-content: space-between;
   margin-bottom: 2vh;
 }
 
 .repeatButton {
+  width: 3vw;
+  height: 3vh;
+  background: url('../logos/harry-potter.svg') no-repeat;
+  border: none;
+  padding: 4vh;
+}
+
+.endGame {
   width: 2vw;
   height: 2vh;
-  background: url('../logos/harry-potter.svg') no-repeat;
+  background: url('../logos/icons8-знак-выхода-50.svg') no-repeat;
   border: none;
   padding: 3vw;
 }
@@ -90,7 +100,7 @@
   height: 2vh;
   background: url('../logos/broom.svg') no-repeat;
   border: none;
-  padding: 3vw;
+  padding: 2vw;
 }
 
 .result {

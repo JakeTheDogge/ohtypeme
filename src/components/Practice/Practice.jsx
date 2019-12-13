@@ -17,9 +17,10 @@ const Practice = (props) => {
   const [mistakes, setMistakes] = useState(0);
   const [percent, setPercent] = useState(0);
   const textInput = React.createRef();
+  const startGameButton = React.createRef();
   const [speed, setSpeed] = useState(0)
   const [time, setTime] = useState(null);
-  const [text, setText] = useState('Wait a moment, darling');
+  const [text, setText] = useState('Let Sorting Hat do the thing');
   const randomId = () => Math.floor(Math.random() * Math.floor(2130) + 1);
 
 
@@ -46,18 +47,27 @@ const Practice = (props) => {
     setTime(Date.now() + 5000)
   };
 
-  useEffect(() => { fetchText() }, []);
+  useEffect(() => {
+    startGameButton.current.focus();
+  }, []);
 
 
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
-    setSpeed(Math.round((common([e.target.value, text]).length * 12 /  ((Date.now() - time)/1000) )));
+    setSpeed(Math.round((common([e.target.value, text]).length * 12 / ((Date.now() - time) / 1000))));
 
     if ((e.target.value.length > input.length) && (e.target.value[e.target.value.length - 1] !== text[e.target.value.length - 1])) {
       setMistakes(mistakes + 1)
     }
-    // if (e.target.value.length === text.length && common([e.target.value, text]) === text) { props.endTyping() }
+    if (e.target.value.length === text.length && common([e.target.value, text]) === text) {
+      props.endTyping();
+      props.endTyping();
+      setInput('');
+      setPercent(0);
+      setMistakes(0);
+      startGameButton.current.focus();
+    }
     setPercent(e.target.value.length / text.length);
   };
 
@@ -67,15 +77,15 @@ const Practice = (props) => {
       {time && <Clock timestamp={time} />}
       <div className={styles.practice}>
         <div className={styles.practiceZone}>
-          <RaceItem percent={percent}/>
+          <RaceItem percent={percent} />
           <PracticeText value={text} input={input} />
-        <div className={styles['practice__input']}>
+          <div className={styles['practice__input']}>
             <textarea value={input} onChange={handleInputChange} ref={textInput} className={styles['practice__input_textarea']} autoFocus='on' spellCheck="false" autoCapitalize='off' autoCorrect='off' autoComplete='off'></textarea>
           </div>
 
         </div>
         <div className={styles.statsZone}>
-          <button className={styles.repeatButton} title='New Text' onClick={toggleClick} />
+          <button className={styles.repeatButton} ref={startGameButton} title='New Text' onClick={toggleClick} />
           <Result mistakes={mistakes} text={text} speed={speed} />
         </div>
       </div >

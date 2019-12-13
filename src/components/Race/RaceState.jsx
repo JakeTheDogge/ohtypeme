@@ -26,7 +26,7 @@ const RaceState = (props) => {
       {competitors.map(progressBar)}
 
       <div key={myId.getId()} className={styles.raceState}>
-        <RaceItem  name={myId.userName} percent={myPercent}/>
+        <RaceItem  name={'(You) '+myId.userName} percent={myPercent}/>
       </div>
     </>
   )
