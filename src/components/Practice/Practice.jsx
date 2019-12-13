@@ -24,7 +24,7 @@ const Practice = (props) => {
 
 
   function fetchText() {
-    fetch(`https://ohtypeme.ml/quotes/${randomId()}`)
+    fetch(`http://ohtypeme.ml/quotes/${randomId()}`)
       .then(response => response.json())
       .then(data => setText(data.text))
   }
