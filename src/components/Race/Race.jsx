@@ -91,7 +91,7 @@ const Race = (props) => {
   return (
     <>
       {gameIsToStart && <div className={styles.gameIsToStart}> <div className={styles.popup}> Waiting for your friends </div></div>}
-      {time && <Clock timestamp={time} />}}
+      {time && <Clock timestamp={time} />}
       <div className={styles.practice}>
         <div className={styles.practiceZone}>
           <RaceState participants={ids} percents={percents} myId={manager.webRTC.peerId} myPercent={percent} />
