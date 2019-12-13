@@ -11,9 +11,13 @@
   border-bottom: 6px dotted black;
   border-radius: 9px;
   margin: auto;
+  font-family: TypingMachine;
+  font-size: 3vh;
 }
 
 .snitch {
+  position: ;
   height: 5vh;
   width: 3vw;
+  z-index:10;
 }
