@@ -52,8 +52,7 @@ const Practice = (props) => {
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
- 
-    setSpeed(Math.round((common([e.target.value, text]).length * 12 /  (new Date(Date.now() - time).getSeconds() + (new Date(Date.now() - time)).getMinutes()*60) )));
+    setSpeed(Math.round((common([e.target.value, text]).length * 12 /  ((Date.now() - time)/1000) )));
 
     if ((e.target.value.length > input.length) && (e.target.value[e.target.value.length - 1] !== text[e.target.value.length - 1])) {
       setMistakes(mistakes + 1)
