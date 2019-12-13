@@ -19,7 +19,8 @@ const Race = (props) => {
   const [mistakes, setMistakes] = useState(0);
   const [percent, setPercent] = useState(0);
   const textInput = React.createRef();
-  const { time, percents, text, gameIsToStart } = props;
+  const [speed, setSpeed] = useState(0)
+  const { time, percents, text, gameIsToStart, isRoundOn } = props;
   const randomId = () => Math.floor(Math.random() * Math.floor(2130) + 1);
   const manager = Manager.getInstance(params.roomId, USER_NAME, RANDOM_SUFFIX);
 
@@ -45,6 +46,8 @@ const Race = (props) => {
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
+
+    setSpeed(Math.round((common([e.target.value, text]).length * 12 / (new Date(Date.now() - time).getSeconds()))));
     if ((e.target.value.length > input.length) && (e.target.value[e.target.value.length - 1] !== text[e.target.value.length - 1])) {
       setMistakes(mistakes + 1)
     }
@@ -71,13 +74,13 @@ const Race = (props) => {
           {/* {ids && <RaceState participants={props.participants} procent={percent} />} */}
 
           <PracticeText value={text} input={input} />
-          <div className={styles['practice__input']}>
+          {isRoundOn || <div className={styles['practice__input']}>
             <textarea value={input} onChange={handleInputChange} ref={textInput} className={styles['practice__input_textarea']} autoFocus='on' spellCheck="false" autoCapitalize='off' autoCorrect='off' autoComplete='off' />
-          </div>
+          </div>}
         </div>
         <div className={styles.statsZone}>
           <button title='Start a Race!' className={styles.startGame} onClick={startGame} />
-          <Result mistakes={mistakes} text={text} />
+          <Result mistakes={mistakes} text={text} speed={speed} />
         </div>
       </div>
     </>
@@ -91,7 +94,7 @@ const mapDispatchToProps = dispatch => ({
   startRound: (payload) => dispatch(startRound(payload)),
   endCountdown: () => dispatch(endCountdown())
 });
-const mapStateToProps = state => ({ text: state.text, gameIsToStart: state.gameIsToStart, time: state.time, percents: state.percents });
+const mapStateToProps = state => ({ text: state.text, gameIsToStart: state.gameIsToStart, time: state.time, percents: state.percents, isRoundOn: state.isRoundOn });
 
 export default connect(
   mapStateToProps,

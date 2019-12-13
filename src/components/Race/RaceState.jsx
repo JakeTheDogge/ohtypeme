@@ -5,7 +5,7 @@ import styles from './Race.module.css';
 const RaceState = (props) => {
   return (
     <div className={styles.raceState}>
-      <RaceItem procent={props.procent} />
+      <RaceItem  percent={props.percent} />
     </div>
   )
 };
