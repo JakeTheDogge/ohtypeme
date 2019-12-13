@@ -62,9 +62,6 @@ const Race = (props) => {
     manager.sendProgress(0)
   }
 
-  useEffect(() => {
-    startGameButton.current.focus();
-  }, []);
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
