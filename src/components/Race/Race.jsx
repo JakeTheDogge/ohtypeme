@@ -16,6 +16,8 @@ import { Result } from '../Practice/Result';
 import RaceState from '../Race/RaceState';
 import Manager from '../../communications/Manager';
 import { RANDOM_SUFFIX, USER_NAME } from '../../App';
+import {jsonServer}  from '../../config';
+
 
 
 const Race = (props) => {
@@ -34,7 +36,7 @@ const Race = (props) => {
 
 
   function fetchText() {
-    fetch(`http://ohtypeme.ml/quotes/${randomId()}`)
+    fetch(jsonServer + `/quotes/${randomId()}`)
       .then(response => response.json())
       .then(text => {
         props.loadText(text);

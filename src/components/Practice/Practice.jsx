@@ -7,6 +7,7 @@ import { loadText, roundIsToStart, endTyping, startRound, endCountdown } from '.
 import common from 'common-prefix';
 import Clock from '../Clock.jsx';
 import RaceItem from '../Race/RaceItem';
+import {jsonServer}  from '../../config';
 
 // import Manager from '../../communications/Manager';
 // import ID from '../../communications/ID';
@@ -24,11 +25,12 @@ const Practice = (props) => {
   const randomId = () => Math.floor(Math.random() * Math.floor(2130) + 1);
 
 
-  function fetchText() {
-    fetch(`http://ohtypeme.ml/quotes/${randomId()}`)
-      .then(response => response.json())
-      .then(data => setText(data.text))
-  }
+  async function fetchText() {
+    fetch(jsonServer + `/quotes/${randomId()}`)
+    .then(response => response.json())
+    .then(data => setText(data.text))
+    .catch(er => console.log(er))
+  };
 
   useEffect(() => {
     textInput.current.focus();
